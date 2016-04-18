@@ -13,7 +13,7 @@ public class AutoLoadMoreListView extends ListView {
     // 这个布尔变量是必须使用的，因为不然会访问多次网络，这个可以控制，防止访问多次网络
     private boolean mIsLoading = false;
     private OnLoadMoreListener mOnLoadMoreListener;
-    private View mHeaderView;
+    private View mHeadViewContainer;
 
     public AutoLoadMoreListView(Context context) {
         super(context);
@@ -26,20 +26,21 @@ public class AutoLoadMoreListView extends ListView {
     }
 
     private void init(Context context) {
-        mHeaderView = View.inflate(context, R.layout.autoloadmorelistview_header, null);
-        super.addHeaderView(mHeaderView);
+        View headerView = View.inflate(context, R.layout.autoloadmorelistview_header, null);
+        super.addHeaderView(headerView);
+        mHeadViewContainer = headerView.findViewById(R.id.ll_header_container);
         hideHeadView();
         super.setOnScrollListener(mScrollListener);
     }
 
     private void hideHeadView() {
         mIsLoading = false;
-        mHeaderView.setVisibility(View.GONE);
+        mHeadViewContainer.setVisibility(View.GONE);
     }
 
     private void showHeadView() {
         mIsLoading = true;
-        mHeaderView.setVisibility(View.VISIBLE);
+        mHeadViewContainer.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -54,13 +55,6 @@ public class AutoLoadMoreListView extends ListView {
     private OnScrollListener mScrollListener = new OnScrollListener() {
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
-//            if (scrollState == SCROLL_STATE_FLING || scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_IDLE) {
-//                // 是否到了第一个条目
-//                if (view.getFirstVisiblePosition() == 0 && !mIsLoading && mOnLoadMoreListener != null) {
-//                    showHeadView();
-//                    mOnLoadMoreListener.onLoadMore();
-//                }
-//            }
         }
 
         @Override
