@@ -26,7 +26,7 @@ public class AutoLoadMoreListView extends ListView {
     }
 
     private void init(Context context) {
-        mHeaderView = View.inflate(context, R.layout.autoLoadmorelistview_header, null);
+        mHeaderView = View.inflate(context, R.layout.autoloadmorelistview_header, null);
         super.addHeaderView(mHeaderView);
         hideHeadView();
         super.setOnScrollListener(mScrollListener);
@@ -54,18 +54,21 @@ public class AutoLoadMoreListView extends ListView {
     private OnScrollListener mScrollListener = new OnScrollListener() {
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
-            if (scrollState == SCROLL_STATE_FLING || scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_IDLE) {
-                // 是否到了第一个条目
-                if (view.getFirstVisiblePosition() == 0 && !mIsLoading && mOnLoadMoreListener != null) {
-                    showHeadView();
-                    mOnLoadMoreListener.onLoadMore();
-                }
-            }
+//            if (scrollState == SCROLL_STATE_FLING || scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_IDLE) {
+//                // 是否到了第一个条目
+//                if (view.getFirstVisiblePosition() == 0 && !mIsLoading && mOnLoadMoreListener != null) {
+//                    showHeadView();
+//                    mOnLoadMoreListener.onLoadMore();
+//                }
+//            }
         }
 
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
+            if (firstVisibleItem == 0 && !mIsLoading && mOnLoadMoreListener != null) {
+                showHeadView();
+                mOnLoadMoreListener.onLoadMore();
+            }
         }
     };
 
